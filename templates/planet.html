@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>James' Coffee Blog Planet</title>
+
+        <link href="mailto:jamesgjamesg.blog" rel="me">
+        
+        <link rel="stylesheet" href="/static/styles.css">
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+        <link rel="apple-touch-icon-precomposed" href="/favicon.ico">
+    
+        <link rel="webmention" href="https://webmention.jamesg.blog/endpoint" />
+    
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+        <meta name="twitter:card" content="summary">
+    </head>
+    <body>
+        <section>
+            <h1>James' Coffee Blog Planet 🌍</h1>
+            <p>This web page aggregates all of the feeds in my feed reader and displays them publicly. Only tech blogs are displayed below.</p>
+            <p>Historically, web pages that aggregate new content from other web pages were called <a href="https://indieweb.org/planet">planets</a> 🌍, hence the name of this site: James' planet.</p>
+            <p>You can use this page to discover new blog posts and content creators who you may find interesting.</p>
+            <p>To explore more blogs, check out my <a href="https://jamesg.blog/blogroll/">blogroll</a> ✏️, the page where I list all of the creators I follow in my <a href="https://aboutfeeds.com/">RSS Feed</a> 📰.</p>
+            <p>Only the 20 most recent posts are included in this planet.</p>
+        </section>
+        <section>
+            <h2>Entries</h2>
+            <ul>
+                <% for @entry in @feed_items %>
+                    <% if (@entry["name"] && @entry["name"] != "") || @entry["photo"] %>
+                        <li class="feed_item">
+                            <h3><%= @entry["name"] %></h3>
+                            <% if @entry["author"] && @entry["author"]["name"] %>
+                                <% if @entry["author"]["url"] %>
+                                    <% if @entry["author"]["url"]["href"] %>
+                                        <p>By <a href="<%= @entry['author']['url']['href'] %>"><%= @entry["author"]["name"] %></a></p>
+                                    <% elsif @entry["author"]["url"].is_a?(String) %>
+                                        <p>By <a href="<%= @entry['author']['url'] %>"><%= @entry["author"]["name"] %></a></p>
+                                    <% else %>
+                                        <p>By <%= @entry["author"]["name"] %></p>
+                                    <% end %>
+                                <% else %>
+                                    <p>By <%= @entry["author"]["name"] %></p>
+                                <% end %>
+                            <% end %>
+                            <% if @entry["photo"] %>
+                                <img src="<%= @entry["photo"] %>" alt="<%= @entry["name"] %> header image">
+                            <% end %>
+                            <% if @entry["video"] %>
+                                <video controls>
+                                    <source src="<%= @entry['video'][0]['url'] %>" type="video/mp4">
+                                </video>
+                            <% end %>
+                            <p>Published on <%= Date.parse(@entry["published"]).strftime("%d/%m/%Y") %></p>
+                            <% if @entry["content"] && @entry["content"]["text"] %>
+                                <p><%= @entry["content"]["text"].split(" ", -1)[0..75].join(" ") %>...</p>
+                            <% end %>
+                            <p><a href="<%= @entry['url'] %>">Read the full post</a></p>
+                        </li>
+                    <% end %>
+                <% end %>
+            </ul>
+        </section>
+        <section class="explore">
+            <h2>Want to explore more blogs?</h2>
+            <p>The following resources will help you discover new blogs and personal websites:</p>
+            <ul>
+                <li><a href="https://xn--sr8hvo.ws">IndieWeb Webring</a></li>
+                <li><a href="https://indieweb.org/blogroll">IndieWeb Blogroll Wiki Page</a></li>
+                <li><a href="https://indieweb-search.jamesg.blog">IndieWeb Search</a></li>
+                <li><a href="https://blogroll.org">blogroll.org</a></li>
+                <li><a href="https://iwebthings.jenett.org">i.webthings Hub</a></li>
+                <li><a href="https://jamesg.blog/blogroll/">My Blogroll</a></li>
+            </ul>
+            <h2>Source Code</h2>
+            <p>The code behind this project is open-source on <a href="https://github.com/capjamesg/planet">GitHub</a>.</p>
+        </section>
+    </body>
+</html>
