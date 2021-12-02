@@ -20,7 +20,7 @@ First, install the required dependencies for this project:
 
 Next, create a .env file with the following values:
 
-    MICROSUB_URL=https://microsub.jamesg.blog/microsub
+    MICROSUB_URL=<your microsub domain>
     MICROSUB_TOKEN=<your token>
     MICROSUB_CHANNEL=<your channel>
 
